@@ -78,8 +78,10 @@ These identifiers are safe, non-reversible, and required for diagnosability:
 - Use `Microsoft.Extensions.Logging` with structured message templates.
 - Use `ILogger.BeginScope` to attach `CorrelationId` once per request instead of
   repeating identifiers in each message.
-- Never interpolate strings (`$"..."`) into log calls; interpolation hides the
-  value from redaction analyzers.
+- Never interpolate strings (`$"..."`) into `ILogger` calls; interpolation hides
+  the value from redaction analyzers and defeats structured logging. (Building an
+  exception message from a correlation ID with interpolation is fine — the
+  prohibition applies to log message templates.)
 - Register a redaction-aware enricher or `ILogger` filter in
   `Program.cs`/`Startup.cs` as defense in depth.
 
@@ -93,6 +95,9 @@ These identifiers are safe, non-reversible, and required for diagnosability:
   `@ToString.Exclude`.
 
 ### OpenTelemetry
+
+See the [`open-telemetry-standard`](../open-telemetry-standard/skill.md) skill
+for the full observability configuration these rules apply to.
 
 - Span attributes are exported to third-party backends: treat them exactly like
   logs.

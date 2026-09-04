@@ -55,14 +55,17 @@ Apply this skill whenever the agent encounters:
 
 ### 3. Favor Azure SDK patterns
 
-- Use `EventHubProducerClient` / `EventHubBufferedProducerClient` and
-  `EventProcessorClient` (Java) or `EventProcessorClient` with
-  `BlobCheckpointStore` (.NET).
+- Producers: `EventHubProducerClient` (both languages), or
+  `EventHubBufferedProducerClient` where fire-and-forget batching is acceptable.
+- Consumers: `EventProcessorClient`, built with `EventProcessorClientBuilder`
+  and a `BlobCheckpointStore` in Java, or constructed with a
+  `BlobContainerClient` checkpoint container in .NET.
 - Batch with `EventDataBatch` instead of per-message sends.
 - Register clients as singletons in DI; they are thread-safe and expensive to
   create.
 - Use the SDK retry options instead of hand-rolled retry loops; do not swallow
-  `EventHubsException.isTransient() == false`.
+  non-transient failures (`EventHubsException.isTransient() == false`) — let
+  them surface.
 
 ### 4. Avoid hardcoded connection strings
 
@@ -176,9 +179,13 @@ services.AddSingleton(sp =>
         options.EventHubName,            // e.g. claims-events
         new DefaultAzureCredential());   // no secrets, no connection string
 });
+```
 
+Publishing, with the singleton `EventHubProducerClient` injected as `_producer`:
+
+```csharp
 // Partition key preserved => per-claim ordering preserved.
-using var batch = await producer.CreateBatchAsync(
+using var batch = await _producer.CreateBatchAsync(
     new CreateBatchOptions { PartitionKey = claim.ClaimReference },
     cancellationToken);
 
@@ -196,11 +203,11 @@ if (!batch.TryAdd(eventData))
     throw new InvalidOperationException("Event is too large for an empty batch.");
 }
 
-await producer.SendAsync(batch, cancellationToken);
+await _producer.SendAsync(batch, cancellationToken);
 ```
 
-Consumer side (.NET) uses `EventProcessorClient` with a
-`BlobCheckpointStore`, both constructed with `DefaultAzureCredential`:
+Consumer side (.NET) uses `EventProcessorClient` with a Blob checkpoint
+container, both constructed with `DefaultAzureCredential`:
 
 ```csharp
 var checkpointContainer = new BlobContainerClient(

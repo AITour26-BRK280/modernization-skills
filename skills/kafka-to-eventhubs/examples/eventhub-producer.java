@@ -44,10 +44,17 @@ public class ClaimEventProducer implements AutoCloseable {
      *                 and the event hub name (for example {@code claims-events}).
      */
     public ClaimEventProducer(EventHubSettings settings) {
-        // Managed Identity in Azure, developer credentials locally.
-        DefaultAzureCredential credential = new DefaultAzureCredentialBuilder()
-                .managedIdentityClientId(settings.getManagedIdentityClientId())
-                .build();
+        // Managed Identity in Azure, developer credentials locally. The client
+        // ID is only set when a user-assigned identity is configured; otherwise
+        // the system-assigned identity is used.
+        DefaultAzureCredentialBuilder credentialBuilder = new DefaultAzureCredentialBuilder();
+
+        if (settings.getManagedIdentityClientId() != null
+                && !settings.getManagedIdentityClientId().isBlank()) {
+            credentialBuilder.managedIdentityClientId(settings.getManagedIdentityClientId());
+        }
+
+        DefaultAzureCredential credential = credentialBuilder.build();
 
         AmqpRetryOptions retryOptions = new AmqpRetryOptions()
                 .setMode(AmqpRetryMode.EXPONENTIAL)

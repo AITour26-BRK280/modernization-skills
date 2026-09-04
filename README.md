@@ -91,10 +91,6 @@ application logs."* The [`pii-handling`](skills/pii-handling/skill.md) skill sho
 the agent how to rewrite an offending `ILogger` call into a correlation-ID-based
 equivalent that keeps the code diagnosable.
 
-> **Rulebooks define what the organization requires.**
-> **Skills define how the organization implements it.**
-> **Both are required for successful modernization at scale.**
-
 ## Connecting this repository to the GitHub Copilot Modernization Agent
 
 1. **Publish the repository** in the organization that owns the applications to
