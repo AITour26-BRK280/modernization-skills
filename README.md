@@ -134,7 +134,8 @@ file as additional context, or reference the skill from a repository-level
      configuration keys) the agent can detect.
    - **Rules / Guidance** — imperative, testable statements. Prefer "never" and
      "always" over "consider".
-   - **Target technologies** — languages, frameworks, and SDK versions.
+   - **Target technologies** — languages, frameworks, and SDKs the skill
+     applies to.
    - **Examples** — before/after code, ideally in `examples/`.
    - **Validation checklist** — the acceptance criteria for a generated pull
      request.

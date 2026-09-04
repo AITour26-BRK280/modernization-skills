@@ -38,7 +38,7 @@ public sealed class ClaimIntakeHandler
         {
             ["CorrelationId"] = context.CorrelationId,
             ["RequestId"] = context.RequestId,
-            ["OperationId"] = Activity.Current?.RootId,
+            ["OperationId"] = context.OperationId,
             ["TraceId"] = Activity.Current?.TraceId.ToString()
         });
 

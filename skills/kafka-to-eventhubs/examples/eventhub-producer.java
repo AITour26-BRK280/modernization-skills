@@ -23,6 +23,7 @@ import com.azure.messaging.eventhubs.EventHubClientBuilder;
 import com.azure.messaging.eventhubs.EventHubProducerClient;
 import com.azure.messaging.eventhubs.models.CreateBatchOptions;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
 import org.slf4j.Logger;
@@ -63,7 +64,8 @@ public class ClaimEventProducer implements AutoCloseable {
                 .buildProducerClient();
     }
 
-    public void publish(ClaimEvent event, String payloadJson, String schemaId, String correlationId) {
+    public void publish(ClaimEvent event, String payloadJson, String schemaId, String correlationId,
+                        String traceparent) {
         // The former Kafka message key becomes the partition key: same key,
         // same partition, same ordering guarantee.
         CreateBatchOptions batchOptions = new CreateBatchOptions()
@@ -71,12 +73,17 @@ public class ClaimEventProducer implements AutoCloseable {
 
         EventDataBatch batch = producer.createBatch(batchOptions);
 
-        // Payload bytes are unchanged, so downstream consumers and the registered
+        // Payload bytes are unchanged - the same UTF-8 encoding the Kafka
+        // StringSerializer produced - so downstream consumers and the registered
         // schema remain compatible.
-        EventData eventData = new EventData(payloadJson);
+        EventData eventData = new EventData(payloadJson.getBytes(StandardCharsets.UTF_8));
         eventData.setContentType("application/json");
         eventData.getProperties().put("schema-id", schemaId);
         eventData.getProperties().put("correlation-id", correlationId);
+
+        // Distributed tracing survives the hop: the W3C trace context travels as
+        // an application property, exactly as it did in the Kafka record header.
+        eventData.getProperties().put("traceparent", traceparent);
 
         if (!batch.tryAdd(eventData)) {
             throw new IllegalStateException(

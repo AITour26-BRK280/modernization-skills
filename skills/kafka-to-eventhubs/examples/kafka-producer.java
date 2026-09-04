@@ -48,7 +48,8 @@ public class ClaimEventProducer implements AutoCloseable {
         this.producer = new KafkaProducer<>(props);
     }
 
-    public void publish(ClaimEvent event, String payloadJson, String schemaId, String correlationId) {
+    public void publish(ClaimEvent event, String payloadJson, String schemaId, String correlationId,
+                        String traceparent) {
         // The message key drives partition assignment and therefore per-claim
         // ordering. It must survive the migration unchanged.
         ProducerRecord<String, String> record =
@@ -57,6 +58,7 @@ public class ClaimEventProducer implements AutoCloseable {
         record.headers().add("content-type", "application/json".getBytes(StandardCharsets.UTF_8));
         record.headers().add("schema-id", schemaId.getBytes(StandardCharsets.UTF_8));
         record.headers().add("correlation-id", correlationId.getBytes(StandardCharsets.UTF_8));
+        record.headers().add("traceparent", traceparent.getBytes(StandardCharsets.UTF_8));
 
         producer.send(record, (RecordMetadata metadata, Exception exception) -> {
             if (exception != null) {
