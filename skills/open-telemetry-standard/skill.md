@@ -175,7 +175,11 @@ public sealed class ClaimTelemetry
     public static readonly Histogram<double> SubmissionDuration =
         Meter.CreateHistogram<double>("claims.submission.duration", unit: "ms");
 }
+```
 
+Used from inside the business operation:
+
+```csharp
 using var activity = ClaimTelemetry.Source.StartActivity("Claim.Submit", ActivityKind.Internal);
 activity?.SetTag("claim.type", claimType);          // low cardinality, no PHI
 ClaimTelemetry.ClaimsSubmitted.Add(1, new KeyValuePair<string, object?>("claim.type", claimType));

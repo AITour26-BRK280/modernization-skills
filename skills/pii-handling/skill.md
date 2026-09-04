@@ -106,7 +106,10 @@ These identifiers are safe, non-reversible, and required for diagnosability:
 ## Examples
 
 See [`examples/before.cs`](examples/before.cs) for the non-compliant pattern and
-[`examples/after.cs`](examples/after.cs) for the corrected implementation.
+[`examples/after.cs`](examples/after.cs) for the corrected implementation. The
+examples are written in .NET; the same before/after transformation applies
+verbatim to the Java and OpenTelemetry guidance above (replace the
+`ILogger` scope with an MDC `correlationId` entry set by a request filter).
 
 ## Validation checklist
 

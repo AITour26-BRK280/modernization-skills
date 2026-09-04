@@ -188,6 +188,9 @@ eventData.ContentType = "application/json";
 eventData.Properties["schema-id"] = schemaId;
 eventData.Properties["correlation-id"] = context.CorrelationId;
 
+// Trace context travels with the event, exactly as it did in the Kafka header.
+eventData.Properties["traceparent"] = Activity.Current?.Id;
+
 if (!batch.TryAdd(eventData))
 {
     throw new InvalidOperationException("Event is too large for an empty batch.");
@@ -200,12 +203,12 @@ Consumer side (.NET) uses `EventProcessorClient` with a
 `BlobCheckpointStore`, both constructed with `DefaultAzureCredential`:
 
 ```csharp
-var checkpointStore = new BlobContainerClient(
+var checkpointContainer = new BlobContainerClient(
     new Uri("https://caldovaprod.blob.core.windows.net/claims-checkpoints"),
     new DefaultAzureCredential());
 
 var processor = new EventProcessorClient(
-    checkpointStore,
+    checkpointContainer,
     consumerGroup: "claims-projection",   // same name as the Kafka consumer group
     fullyQualifiedNamespace: options.FullyQualifiedNamespace,
     eventHubName: options.EventHubName,

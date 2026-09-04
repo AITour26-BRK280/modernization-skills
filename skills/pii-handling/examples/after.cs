@@ -53,7 +53,9 @@ public sealed class ClaimIntakeHandler
         {
             var result = await _claims.SubmitAsync(submission, cancellationToken);
 
-            // ClaimReference is a system-generated, non-reversible surrogate key.
+            // ClaimReference is a system-generated, non-reversible surrogate key,
+            // and ElapsedMilliseconds is measured by the repository call itself -
+            // both are safe operational dimensions.
             _logger.LogInformation(
                 "Claim accepted. ClaimReference={ClaimReference} DurationMs={DurationMs}",
                 result.ClaimReference,
