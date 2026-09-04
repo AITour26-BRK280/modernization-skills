@@ -1,3 +1,8 @@
+---
+name: kafka-to-eventhubs
+description: "Standardizes migration of self-managed Apache Kafka producers and consumers to Azure Event Hubs using Azure SDK clients, Managed Identity authentication, preserved event schemas, and preserved partitioning strategy."
+---
+
 # Kafka to Azure Event Hubs Migration
 
 ## Goal

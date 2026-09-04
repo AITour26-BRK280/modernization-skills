@@ -1,3 +1,8 @@
+---
+name: pii-handling
+description: "Prevents patient, member, healthcare, customer, and personally identifiable information from being written to logs, traces, metrics, or exception messages, and replaces it with correlation, request, trace, and operation identifiers."
+---
+
 # PII Handling in Logs and Telemetry
 
 ## Goal
