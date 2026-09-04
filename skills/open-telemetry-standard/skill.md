@@ -196,34 +196,28 @@ ClaimTelemetry.ClaimsSubmitted.Add(1, new KeyValuePair<string, object?>("claim.t
 </dependency>
 ```
 
-`application.yml`:
+`application.properties` (dotted keys avoid the YAML nesting ambiguity around
+`otel.traces.sampler` and `otel.traces.sampler.arg`):
 
-```yaml
-otel:
-  service:
-    name: caldova-claims-worker
-  resource:
-    attributes:
-      service.namespace: caldova.claims
-      service.version: ${APP_VERSION:unknown}
-      deployment.environment: ${ENVIRONMENT:dev}
-      cloud.region: ${AZURE_REGION:unknown}
-  traces:
-    sampler: parentbased_traceidratio
-    sampler.arg: "0.1"
-    exporter: otlp
-  metrics:
-    exporter: otlp
-  logs:
-    exporter: otlp
-  exporter:
-    otlp:
-      endpoint: ${OTEL_EXPORTER_OTLP_ENDPOINT:http://otel-collector:4317}
-      protocol: grpc
-  instrumentation:
-    jdbc:
-      statement-sanitizer:
-        enabled: true
+```properties
+otel.service.name=caldova-claims-worker
+
+otel.resource.attributes=service.namespace=caldova.claims,\
+  service.version=${APP_VERSION:unknown},\
+  deployment.environment=${ENVIRONMENT:dev},\
+  cloud.region=${AZURE_REGION:unknown}
+
+otel.traces.sampler=parentbased_traceidratio
+otel.traces.sampler.arg=0.1
+
+otel.traces.exporter=otlp
+otel.metrics.exporter=otlp
+otel.logs.exporter=otlp
+
+otel.exporter.otlp.endpoint=${OTEL_EXPORTER_OTLP_ENDPOINT:http://otel-collector:4317}
+otel.exporter.otlp.protocol=grpc
+
+otel.instrumentation.jdbc.statement-sanitizer.enabled=true
 ```
 
 Zero-code agent alternative (preferred for legacy applications):

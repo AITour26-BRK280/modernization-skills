@@ -29,7 +29,9 @@ import java.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ClaimEventProducer implements AutoCloseable {
+// Declared package-private so this illustrative file can keep the skills-library
+// file naming convention rather than the Java public-class file-name rule.
+class ClaimEventProducer implements AutoCloseable {
 
     private static final Logger log = LoggerFactory.getLogger(ClaimEventProducer.class);
 
@@ -43,7 +45,7 @@ public class ClaimEventProducer implements AutoCloseable {
      *                 (for example {@code caldova-prod.servicebus.windows.net})
      *                 and the event hub name (for example {@code claims-events}).
      */
-    public ClaimEventProducer(EventHubSettings settings) {
+    ClaimEventProducer(EventHubSettings settings) {
         // Managed Identity in Azure, developer credentials locally. The client
         // ID is only set when a user-assigned identity is configured; otherwise
         // the system-assigned identity is used.
@@ -71,7 +73,7 @@ public class ClaimEventProducer implements AutoCloseable {
                 .buildProducerClient();
     }
 
-    public void publish(ClaimEvent event, String payloadJson, String schemaId, String correlationId,
+    void publish(ClaimEvent event, String payloadJson, String schemaId, String correlationId,
                         String traceparent) {
         // The former Kafka message key becomes the partition key: same key,
         // same partition, same ordering guarantee.

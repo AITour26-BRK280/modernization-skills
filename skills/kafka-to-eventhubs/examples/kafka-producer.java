@@ -8,7 +8,7 @@
 // The message key (claimReference) and the record headers are the two things
 // that MUST be preserved by the migration.
 
-package com.caldova.claims.messaging;
+package com.caldova.claims.messaging.legacy;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
@@ -21,14 +21,16 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ClaimEventProducer implements AutoCloseable {
+// Declared package-private so this illustrative file can keep the skills-library
+// file naming convention rather than the Java public-class file-name rule.
+class ClaimEventProducer implements AutoCloseable {
 
     private static final Logger log = LoggerFactory.getLogger(ClaimEventProducer.class);
     private static final String TOPIC = "claims-events";
 
     private final KafkaProducer<String, String> producer;
 
-    public ClaimEventProducer(KafkaSettings settings) {
+    ClaimEventProducer(KafkaSettings settings) {
         Properties props = new Properties();
 
         // Self-managed broker endpoint.
@@ -48,7 +50,7 @@ public class ClaimEventProducer implements AutoCloseable {
         this.producer = new KafkaProducer<>(props);
     }
 
-    public void publish(ClaimEvent event, String payloadJson, String schemaId, String correlationId,
+    void publish(ClaimEvent event, String payloadJson, String schemaId, String correlationId,
                         String traceparent) {
         // The message key drives partition assignment and therefore per-claim
         // ordering. It must survive the migration unchanged.
