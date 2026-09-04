@@ -200,7 +200,8 @@ eventData.Properties["traceparent"] = Activity.Current?.Id;
 
 if (!batch.TryAdd(eventData))
 {
-    throw new InvalidOperationException("Event is too large for an empty batch.");
+    throw new InvalidOperationException(
+        $"Claim event exceeds the maximum Event Hubs batch size. CorrelationId={context.CorrelationId}");
 }
 
 await _producer.SendAsync(batch, cancellationToken);

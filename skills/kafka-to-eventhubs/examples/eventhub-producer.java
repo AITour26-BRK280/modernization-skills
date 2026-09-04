@@ -80,6 +80,10 @@ class ClaimEventProducer implements AutoCloseable {
         CreateBatchOptions batchOptions = new CreateBatchOptions()
                 .setPartitionKey(event.getClaimReference());
 
+        // A batch is created per publish call because the partition key is a
+        // property of the batch: events with different keys cannot share one.
+        // Where many events share a key, fill a single batch with tryAdd instead
+        // of sending one event at a time.
         EventDataBatch batch = producer.createBatch(batchOptions);
 
         // Payload bytes are unchanged - the same UTF-8 encoding the Kafka

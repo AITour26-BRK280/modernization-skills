@@ -49,9 +49,15 @@ code work locally and in Azure.
 
 ```csharp
 // Program.cs - one credential instance shared by every Azure client.
+// Leave ManagedIdentityClientId null for a system-assigned identity; an empty
+// string is not the same thing and will fail credential resolution.
+var managedIdentityClientId = builder.Configuration["Azure:ManagedIdentityClientId"];
+
 var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
 {
-    ManagedIdentityClientId = builder.Configuration["Azure:ManagedIdentityClientId"],
+    ManagedIdentityClientId = string.IsNullOrWhiteSpace(managedIdentityClientId)
+        ? null
+        : managedIdentityClientId,
     ExcludeInteractiveBrowserCredential = true
 });
 

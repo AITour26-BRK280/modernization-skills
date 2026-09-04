@@ -116,6 +116,10 @@ examples are written in .NET; the same before/after transformation applies
 verbatim to the Java and OpenTelemetry guidance above (replace the
 `ILogger` scope with an MDC `correlationId` entry set by a request filter).
 
+Note that `after.cs` builds its rethrown exception message with string
+interpolation. That is intentional: the "no interpolation" rule applies to
+`ILogger` message templates, and the interpolated value is a correlation ID.
+
 ## Validation checklist
 
 - [ ] No log, span, metric, or exception message contains a value from the
