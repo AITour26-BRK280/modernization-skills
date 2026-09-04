@@ -99,7 +99,7 @@ meaningful business operations.
 
 Span attributes and metric dimensions are exported to third-party backends and
 are subject to exactly the same restrictions as logs. Never attach PII/PHI —
-see the [`pii-handling`](../pii-handling/skill.md) skill. Redact query
+see the [`pii-handling`](../pii-handling/SKILL.md) skill. Redact query
 parameters and disable `db.statement` capture where statements may embed PHI.
 
 ## Sample configuration — .NET

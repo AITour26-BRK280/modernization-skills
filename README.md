@@ -14,35 +14,35 @@ service is applied the same way to all of them.
 
 | Skill | Category | Purpose |
 | --- | --- | --- |
-| [`pii-handling`](skills/pii-handling/skill.md) | security-and-compliance | Keep patient, member, and customer identifiers out of logs and telemetry. |
-| [`kafka-to-eventhubs`](skills/kafka-to-eventhubs/skill.md) | cloud-migration | Standardize Apache Kafka migrations to Azure Event Hubs. |
-| [`azure-managed-identity`](skills/azure-managed-identity/skill.md) | security-and-compliance | Replace secrets and connection strings with Managed Identity. |
-| [`open-telemetry-standard`](skills/open-telemetry-standard/skill.md) | observability | Enforce the organization-wide observability standard. |
+| [`pii-handling`](skills/pii-handling/SKILL.md) | security-and-compliance | Keep patient, member, and customer identifiers out of logs and telemetry. |
+| [`kafka-to-eventhubs`](skills/kafka-to-eventhubs/SKILL.md) | cloud-migration | Standardize Apache Kafka migrations to Azure Event Hubs. |
+| [`azure-managed-identity`](skills/azure-managed-identity/SKILL.md) | security-and-compliance | Replace secrets and connection strings with Managed Identity. |
+| [`open-telemetry-standard`](skills/open-telemetry-standard/SKILL.md) | observability | Enforce the organization-wide observability standard. |
 
 ## Repository layout
 
 ```text
 skills/
 ├── pii-handling/
-│   ├── skill.md
+│   ├── SKILL.md
 │   ├── examples/
 │   │   ├── before.cs
 │   │   └── after.cs
 │   └── metadata.json
 │
 ├── kafka-to-eventhubs/
-│   ├── skill.md
+│   ├── SKILL.md
 │   ├── examples/
 │   │   ├── kafka-producer.java
 │   │   └── eventhub-producer.java
 │   └── metadata.json
 │
 ├── azure-managed-identity/
-│   ├── skill.md
+│   ├── SKILL.md
 │   └── metadata.json
 │
 ├── open-telemetry-standard/
-│   ├── skill.md
+│   ├── SKILL.md
 │   └── metadata.json
 │
 README.md
@@ -56,7 +56,7 @@ or edits code.
 
 Each skill is a small, self-contained package:
 
-- **`skill.md`** — the instructions themselves: the goal, when the skill applies,
+- **`SKILL.md`** — the instructions themselves: the goal, when the skill applies,
   the rules to follow, target technologies, worked examples, and a validation
   checklist.
 - **`examples/`** — realistic before/after code that shows the agent the exact
@@ -87,7 +87,7 @@ Rulebooks and Skills are complementary. They answer different questions.
 | Verified by | Compliance review, audit | Code review, tests, the skill's validation checklist |
 
 A rulebook says *"personally identifiable information must never be written to
-application logs."* The [`pii-handling`](skills/pii-handling/skill.md) skill shows
+application logs."* The [`pii-handling`](skills/pii-handling/SKILL.md) skill shows
 the agent how to rewrite an offending `ILogger` call into a correlation-ID-based
 equivalent that keeps the code diagnosable.
 
@@ -107,13 +107,13 @@ equivalent that keeps the code diagnosable.
    for example `kafka-to-eventhubs` plus `azure-managed-identity` for an
    integration service, and `pii-handling` plus `open-telemetry-standard` for
    every workload.
-5. **Run the modernization task.** The agent loads each selected `skill.md`,
+5. **Run the modernization task.** The agent loads each selected `SKILL.md`,
    applies its rules while planning and editing, and uses the `examples/` files
    as the target shape for generated code.
 6. **Review the pull request against the skill's validation checklist.** The
    checklist at the end of each skill doubles as the reviewer's checklist.
 
-Local and manual use is also supported: point any Copilot agent at a `skill.md`
+Local and manual use is also supported: point any Copilot agent at a `SKILL.md`
 file as additional context, or reference the skill from a repository-level
 `.github/copilot-instructions.md`.
 
@@ -122,7 +122,7 @@ file as additional context, or reference the skill from a repository-level
 1. **Create the folder.** `skills/<skill-name>/`, using a lowercase,
    hyphenated name that describes the outcome (`kafka-to-eventhubs`), not the
    tool.
-2. **Write `skill.md`** using the structure shared by every skill in this
+2. **Write `SKILL.md`** using the structure shared by every skill in this
    repository:
    - `# Title`
    - **Goal** — one paragraph, outcome-focused.
@@ -193,7 +193,7 @@ clarifications and typos.
   `metadata.json`, point to its replacement, and remove it in the next major
   release.
 - **Automated checks.** Validate on every pull request that each skill folder
-  contains `skill.md` and a `metadata.json` with all required fields, that
+  contains `SKILL.md` and a `metadata.json` with all required fields, that
   `name` matches the folder, that internal links resolve, and that secret
   scanning finds nothing in `examples/`.
 - **Feedback loop.** When a modernization pull request needs a manual

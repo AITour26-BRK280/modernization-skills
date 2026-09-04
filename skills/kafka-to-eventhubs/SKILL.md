@@ -50,7 +50,7 @@ Apply this skill whenever the agent encounters:
   - `Azure Event Hubs Data Sender` for producers.
   - `Azure Event Hubs Data Receiver` for consumers.
   - `Azure Event Hubs Data Owner` only for management tooling.
-- See the [`azure-managed-identity`](../azure-managed-identity/skill.md) skill for
+- See the [`azure-managed-identity`](../azure-managed-identity/SKILL.md) skill for
   the credential configuration details.
 
 ### 3. Favor Azure SDK patterns
@@ -243,5 +243,5 @@ var processor = new EventProcessorClient(
 - [ ] Poison-message handling routes to an explicit dead-letter destination.
 - [ ] Clients are registered as singletons and disposed on shutdown.
 - [ ] No PII is added to event properties or telemetry (see the
-      [`pii-handling`](../pii-handling/skill.md) skill).
+      [`pii-handling`](../pii-handling/SKILL.md) skill).
 - [ ] Integration tests run against the target namespace before cutover.
