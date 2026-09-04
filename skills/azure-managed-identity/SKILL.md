@@ -37,7 +37,7 @@ Apply this skill whenever the agent encounters:
    or revoke the credential, and remove it from Key Vault, pipeline variables,
    and any local `.env`/user-secrets file.
 7. **Never log tokens, credentials, or the identity's client secret material.**
-   See the [`pii-handling`](../pii-handling/skill.md) skill for the logging rules.
+   See the [`pii-handling`](../pii-handling/SKILL.md) skill for the logging rules.
 
 ## Azure SDK authentication
 
@@ -132,7 +132,7 @@ builder.Services.AddSingleton(sp => new EventHubProducerClient(
 - Consumer role: `Azure Event Hubs Data Receiver` (plus
   `Storage Blob Data Contributor` on the checkpoint container).
 - Never `EventHubProducerClient(connectionString)`.
-- See the [`kafka-to-eventhubs`](../kafka-to-eventhubs/skill.md) skill for the
+- See the [`kafka-to-eventhubs`](../kafka-to-eventhubs/SKILL.md) skill for the
   full migration pattern.
 
 ## Storage Accounts

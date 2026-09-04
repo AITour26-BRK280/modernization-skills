@@ -96,7 +96,7 @@ These identifiers are safe, non-reversible, and required for diagnosability:
 
 ### OpenTelemetry
 
-See the [`open-telemetry-standard`](../open-telemetry-standard/skill.md) skill
+See the [`open-telemetry-standard`](../open-telemetry-standard/SKILL.md) skill
 for the full observability configuration these rules apply to.
 
 - Span attributes are exported to third-party backends: treat them exactly like
