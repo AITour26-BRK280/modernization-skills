@@ -1,0 +1,17 @@
+{
+  "name": "pii-handling",
+  "description": "Prevents patient, member, healthcare, customer, and personally identifiable information from being written to logs, traces, metrics, or exception messages, and replaces it with correlation, request, trace, and operation identifiers.",
+  "category": "security-and-compliance",
+  "owner": "caldova-platform-security",
+  "tags": [
+    "pii",
+    "phi",
+    "hipaa",
+    "logging",
+    "observability",
+    "dotnet",
+    "java",
+    "opentelemetry"
+  ],
+  "version": "1.0.0"
+}

@@ -1,0 +1,19 @@
+{
+  "name": "azure-managed-identity",
+  "description": "Replaces secrets, passwords, API keys, and connection strings with Microsoft Entra Managed Identity across Azure SDK clients, Key Vault, Event Hubs, Storage Accounts, and Service Bus, using least-privileged RBAC role assignments.",
+  "category": "security-and-compliance",
+  "owner": "caldova-cloud-security",
+  "tags": [
+    "managed-identity",
+    "entra-id",
+    "secretless",
+    "key-vault",
+    "event-hubs",
+    "storage",
+    "service-bus",
+    "azure",
+    "dotnet",
+    "java"
+  ],
+  "version": "1.0.0"
+}

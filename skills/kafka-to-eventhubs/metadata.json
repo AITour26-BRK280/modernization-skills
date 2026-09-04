@@ -1,0 +1,16 @@
+{
+  "name": "kafka-to-eventhubs",
+  "description": "Standardizes migration of self-managed Apache Kafka producers and consumers to Azure Event Hubs using Azure SDK clients, Managed Identity authentication, preserved event schemas, and preserved partitioning strategy.",
+  "category": "cloud-migration",
+  "owner": "caldova-integration-platform",
+  "tags": [
+    "kafka",
+    "event-hubs",
+    "messaging",
+    "azure",
+    "managed-identity",
+    "java",
+    "dotnet"
+  ],
+  "version": "1.0.0"
+}
