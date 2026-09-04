@@ -1,3 +1,8 @@
+---
+name: azure-managed-identity
+description: "Replaces secrets, passwords, API keys, and connection strings with Microsoft Entra Managed Identity across Azure SDK clients, Key Vault, Event Hubs, Storage Accounts, and Service Bus, using least-privileged RBAC role assignments."
+---
+
 # Azure Managed Identity
 
 ## Goal

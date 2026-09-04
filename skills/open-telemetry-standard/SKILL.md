@@ -1,3 +1,8 @@
+---
+name: open-telemetry-standard
+description: "Enforces the organization-wide observability standard: OpenTelemetry tracing, metrics, logging, correlation, and distributed context propagation with consistent resource attributes and OTLP export to Azure Monitor."
+---
+
 # OpenTelemetry Standard
 
 ## Goal
